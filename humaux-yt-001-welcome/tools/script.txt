@@ -1,0 +1,8 @@
+Every AI you talk to starts from zero. Every single time.
+You brief it on Monday. By Friday, it's a stranger again.
+That's not a model problem. It's a memory problem.
+I'm building Humaux: memory for AI agents. Cross-session, so your agent remembers what you told it last week, last month, last project.
+On this channel, no hype. Just real builds, real failures, and real numbers.
+You'll see the tests I run, the mistakes I make, and the fixes that actually stick.
+If you've ever re-explained yourself to a machine, you're in the right place.
+Subscribe. And let's stop starting from zero.

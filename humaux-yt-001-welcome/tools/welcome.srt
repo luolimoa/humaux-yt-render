@@ -1,0 +1,32 @@
+1
+00:00:00,000 --> 00:00:03,340
+Every AI you talk to starts from zero. Every single time.
+
+2
+00:00:03,600 --> 00:00:06,480
+You brief it on Monday. By Friday, it's a stranger again.
+
+3
+00:00:06,720 --> 00:00:09,160
+That's not a model problem. It's a memory problem.
+
+4
+00:00:09,440 --> 00:00:17,580
+I'm building Humaux: memory for AI agents. Cross-session, so your agent remembers what you told it last week, last month, last project.
+
+5
+00:00:17,820 --> 00:00:21,820
+On this channel, no hype. Just real builds, real failures, and real numbers.
+
+6
+00:00:22,120 --> 00:00:26,280
+You'll see the tests I run, the mistakes I make, and the fixes that actually stick.
+
+7
+00:00:26,520 --> 00:00:29,720
+If you've ever re-explained yourself to a machine, you're in the right place.
+
+8
+00:00:29,940 --> 00:00:32,040
+Subscribe. And let's stop starting from zero.
+
