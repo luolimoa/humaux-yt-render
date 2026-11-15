@@ -42,11 +42,11 @@ jobs:
         run: |
           cp -r humaux-yt-001-welcome tool/
           cd tool/humaux-yt-001-welcome
-          base64 -d assets/voice.wav.b64 > assets/voice.wav
-          base64 -d assets/fonts/NotoSansSC-500.woff.b64 > assets/fonts/NotoSansSC-500.woff
-          base64 -d assets/fonts/NotoSansSC-700.woff.b64 > assets/fonts/NotoSansSC-700.woff
-          base64 -d assets/fonts/NotoSansSC-800.woff.b64 > assets/fonts/NotoSansSC-800.woff
-          base64 -d assets/fonts/NotoSansSC-900.woff.b64 > assets/fonts/NotoSansSC-900.woff
+          base64 -d < assets/voice.wav.b64 > assets/voice.wav
+          base64 -d < assets/fonts/NotoSansSC-500.woff.b64 > assets/fonts/NotoSansSC-500.woff
+          base64 -d < assets/fonts/NotoSansSC-700.woff.b64 > assets/fonts/NotoSansSC-700.woff
+          base64 -d < assets/fonts/NotoSansSC-800.woff.b64 > assets/fonts/NotoSansSC-800.woff
+          base64 -d < assets/fonts/NotoSansSC-900.woff.b64 > assets/fonts/NotoSansSC-900.woff
           shasum -a 256 -c <<'EOF'
           ea3dcf33fdae18b3fd1e56e46a122317be50554ec7f9d122bd4ed07130c42466  assets/voice.wav
           928d841b1ec663ebce82593568cbc19749fe652f88b8ec960723b7d87b551512  assets/fonts/NotoSansSC-500.woff
