@@ -31,12 +31,12 @@
   #s2 .check { left: 180px; top: 300px; width: 900px; }
   #s2 .mem-bar { left: 1180px; top: 380px; width: 560px; height: 44px; }
   #s2 .mem-label { left: 1180px; top: 320px; }
-  #s2 .mem-pct { left: 1180px; top: 450px; font-size: 110px; }
+  #s2 .mem-pct { position: absolute; left: 1180px; top: 450px; font-size: 110px; }
   #s2 .sticker2 { left: 1180px; top: 620px; }
   #s3 .line-model { top: 330px; font-size: 84px; }
   #s3 .line-mem { top: 520px; font-size: 150px; }
   #s3 .tog { left: 810px; top: 760px; }
-  #s3 .tog-label { left: 1010px; top: 782px; font-size: 40px; font-weight: 900; color: #fff; }
+  #s3 .tog-label { position: absolute; left: 1010px; top: 782px; font-size: 40px; font-weight: 900; color: #fff; }
   #s4 .brand-word { top: 200px; font-size: 210px; }
   #s4 .brand-sub { top: 470px; font-size: 52px; font-weight: 900; color: rgba(26,26,26,.62); }
   #s4 .card1 { left: 240px; top: 620px; width: 420px; height: 300px; }
@@ -159,7 +159,7 @@
   <!-- S1: hook — AMNESIA? + chat bubble -->
   <div class="scene bg-dots" id="s1" data-om-id="scene-hook">
     <div class="sticker sticker1" data-om-id="sticker-pop">POP!</div>
-    <div class="center-line pop-display hook-word" id="hook-word" data-om-id="hook-word">{{hookWord}}</div>
+    <div class="center-line pop-display hook-word" id="hook-word" data-om-id="hook-word">AMNESIA?</div>
     <div class="center-line hook-sub" data-om-id="hook-sub">Every single time.</div>
     <div class="chat-bubble chat1" data-om-id="chat-forget">
       <div class="who">YOU · YESTERDAY</div>
@@ -195,7 +195,7 @@
   <!-- S4: solution — HUMAUX + three cards -->
   <div class="scene bg-rays" id="s4" data-om-id="scene-solution">
     <div class="sticker sticker--cyan sticker4" data-om-id="sticker-cross">CROSS-SESSION</div>
-    <div class="center-line pop-display brand-word" id="brand-word" data-om-id="brand-word">{{brandWord}}</div>
+    <div class="center-line pop-display brand-word" id="brand-word" data-om-id="brand-word">HUMAUX</div>
     <div class="center-line brand-sub" data-om-id="brand-sub">memory for AI agents</div>
     <div class="pop-card card1" data-om-id="card-week"><div class="ic">1</div><div class="t">LAST WEEK</div><div class="d">what you told it</div></div>
     <div class="pop-card card2" data-om-id="card-month"><div class="ic" style="background:var(--pop-cyan)">2</div><div class="t">LAST MONTH</div><div class="d">what you built</div></div>
@@ -235,6 +235,14 @@
 <script>
   var V = OM.vars();
   POP.bpm = V.bpm || 120;
+  /* Composition variables override the hardcoded display words (the
+     {{...}} placeholders are NOT substituted at render time — they only
+     change when `om set` rewrites the source — so the words live in the
+     HTML and V.* only overrides them). Must run before POP.karaoke(). */
+  var _hw = document.getElementById('hook-word');
+  if (_hw && V.hookWord) _hw.textContent = V.hookWord;
+  var _bw = document.getElementById('brand-word');
+  if (_bw && V.brandWord) _bw.textContent = V.brandWord;
   var BEAT = POP.beat();           // 0.5 s at 120 BPM
   var B = function (n) { return n * BEAT; };  // beat n -> seconds
 
@@ -338,6 +346,7 @@
   /* ---- S3 diagnosis (beats 20–27) ---- */
   tl.addLabel('scene:diagnosis', B(20));
   show('#s3', B(20));
+  tl.set('#hud', { className: '+=hud--on-dark' }, B(20));
   tl.fromTo('[data-om-id="line-model"]', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55 }, B(20));
   tl.fromTo('[data-om-id="strike-m"]', { opacity: 0, scaleX: 0, transformOrigin: '0 50%' }, { opacity: 1, scaleX: 1, duration: 0.35, ease: 'expo.out' }, OM.sfx('draw', B(23)));
   karaPop(memChars, B(24), 'impact');
@@ -349,6 +358,7 @@
   /* ---- S4 solution (beats 27–41) ---- */
   tl.addLabel('scene:solution', B(27));
   show('#s4', B(27));
+  tl.set('#hud', { className: '-=hud--on-dark' }, B(27));
   karaPop(brandChars, B(27), 'impact');
   tl.fromTo('[data-om-id="sticker-cross"]', { scale: 0, rotation: 12, opacity: 0 }, { scale: 1, rotation: -4, opacity: 1, duration: 0.4, ease: 'back.out(2.5)' }, OM.sfx('pop', B(29)));
   tl.fromTo('[data-om-id="brand-sub"]', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, B(30));

@@ -249,9 +249,9 @@ html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
 #hud .hud-br .track { width: 220px; height: 10px; border-radius: 999px; background: rgba(26, 26, 26, 0.18); overflow: hidden; }
 #hud .hud-br .track > .fill { background: var(--pop-pink); height: 100%; width: 0%; border-radius: 999px; }
 #hud .hud-br .pct { font-size: 24px; font-weight: 900; letter-spacing: 0.06em; }
-#hud--on-dark { color: #fff; }
-#hud--on-dark .hud-tr { background: rgba(45, 27, 78, 0.6); color: #fff; }
-#hud--on-dark .hud-br .track { background: rgba(255, 255, 255, 0.25); }
+#hud.hud--on-dark { color: #fff; }
+#hud.hud--on-dark .hud-tr { background: rgba(45, 27, 78, 0.6); color: #fff; }
+#hud.hud--on-dark .hud-br .track { background: rgba(255, 255, 255, 0.25); }
 
 /* ---- captions (same contract as the brand system) -------------------- */
 #caption {
