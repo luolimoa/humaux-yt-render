@@ -31,7 +31,7 @@ jobs:
           node --version
           command -v ffmpeg >/dev/null 2>&1 || brew install ffmpeg
           ffmpeg -version | head -1
-          ls /usr/bin/google-chrome && /usr/bin/google-chrome --version
+          ls "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" && "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --version
 
       - name: Clone huashu-motion tool (pinned commit)
         run: |
