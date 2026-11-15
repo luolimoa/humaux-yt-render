@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[
+  {"id":"paper","type":"color","label":"paper","default":"#F4EEE1"},
+  {"id":"ink","type":"color","label":"ink","default":"#1A1A1A"},
+  {"id":"accent","type":"color","label":"gold","default":"#B08D38"},
+  {"id":"endHold","type":"number","label":"end hold (s)","default":1.8,"min":0,"max":10,"step":0.1,"group":"rhythm"}
+]'>
+<head>
+<meta charset="utf-8">
+<title>Welcome to Humaux · Humaux</title>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/om.js"></script>
+<style id="om-fonts">
+@font-face { font-family: "Noto Sans SC"; src: url("assets/fonts/NotoSansSC-500.woff") format("woff"); font-weight: 500; font-style: normal; }
+@font-face { font-family: "Noto Sans SC"; src: url("assets/fonts/NotoSansSC-900.woff") format("woff"); font-weight: 900; font-style: normal; }
+</style>
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+  #film { position: relative; width: 1920px; height: 1080px; overflow: hidden;
+    background: var(--paper); color: var(--ink);
+    font-family: "Noto Sans SC", sans-serif; font-weight: 500; }
+  .grain { position: absolute; inset: 0; pointer-events: none; opacity: .55; background:
+      radial-gradient(1200px 700px at 20% 10%, #ffffff90, transparent 60%),
+      radial-gradient(900px 600px at 90% 100%, #00000012, transparent 60%); }
+  .scene { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
+  .big-line { position: absolute; left: 0; right: 0; text-align: center; font-weight: 900; }
+  .sub-line { position: absolute; left: 0; right: 0; text-align: center; font-size: 44px; color: #1a1a1a99; }
+  .gold { color: var(--accent); }
+  #caption { position: absolute; left: 0; right: 0; bottom: 44px; text-align: center;
+    font-size: 38px; letter-spacing: 1px; opacity: 0; z-index: 50; }
+  #caption span { background: #F4EEE1d9; padding: 8px 28px; border-radius: 12px; }
+  .cap-line { position: absolute; left: 0; right: 0; top: 0; text-align: center; }
+  .cal { position: absolute; width: 300px; height: 300px; background: #fffdf8; border-radius: 24px;
+    box-shadow: 0 20px 50px #1a1a1a1c; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px; }
+  .cal .d { font-size: 88px; font-weight: 900; }
+  .cal .w { font-size: 34px; letter-spacing: 6px; color: var(--accent); font-weight: 900; }
+  .strike { position: absolute; left: 0; right: 0; text-align: center; }
+  .strike svg { overflow: visible; }
+  .card3 { position: absolute; width: 420px; height: 300px; background: #fffdf8; border-radius: 24px;
+    box-shadow: 0 20px 50px #1a1a1a1c; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px; }
+  .card3 .t { font-size: 46px; font-weight: 900; }
+  .card3 .d { font-size: 26px; color: #1a1a1a88; }
+  .card3 .ic { width: 76px; height: 76px; border-radius: 50%; background: var(--accent);
+    display: flex; align-items: center; justify-content: center; color: #F4EEE1;
+    font-size: 34px; font-weight: 900; }
+  .stamp { position: absolute; left: 0; right: 0; text-align: center; font-weight: 900;
+    border: 6px solid var(--accent); border-radius: 20px; padding: 18px 0; color: var(--accent); }
+  .brand-kicker { position: absolute; left: 0; right: 0; text-align: center; font-size: 38px;
+    letter-spacing: 4px; color: var(--accent); font-weight: 900; }
+  .brand-name { position: absolute; left: 0; right: 0; text-align: center; font-weight: 900;
+    font-size: 190px; letter-spacing: 26px; }
+  .brand-name .bl { display: inline-block; }
+  .brand-sub { position: absolute; left: 0; right: 0; text-align: center; font-size: 34px;
+    letter-spacing: 10px; color: #1a1a1a99; }
+  .gold-sweep { position: absolute; height: 8px; background: var(--accent); }
+  .impact-ring { position: absolute; border: 6px solid var(--accent); border-radius: 50%; opacity: 0; }
+</style>
+</head>
+<body>
+<audio id="om-voice" src="assets/voice.wav"></audio>
+<div id="film" data-composition-id="film" data-width="1920" data-height="1080">
+  <div class="grain" data-om-id="grain"></div>
+
+  <!-- S1: hook -->
+  <div class="scene" id="s1" data-om-id="scene-hook">
+    <div class="big-line" data-om-id="hook-main" style="top:330px;font-size:150px;letter-spacing:2px">STARTS FROM <span class="gold">ZERO</span></div>
+    <div class="sub-line" data-om-id="hook-sub" style="top:540px">Every single time.</div>
+    <div class="impact-ring" data-om-id="ring1" style="left:660px;top:300px;width:600px;height:220px"></div>
+  </div>
+
+  <!-- S2: stranger -->
+  <div class="scene" id="s2" data-om-id="scene-stranger">
+    <div class="cal" data-om-id="cal-mon" style="left:480px;top:300px"><span class="w">MONDAY</span><span class="d">Briefed</span></div>
+    <div class="big-line" data-om-id="arrow" style="top:400px;font-size:80px;color:var(--accent)">→</div>
+    <div class="cal" data-om-id="cal-fri" style="left:1140px;top:300px;opacity:.45"><span class="w">FRIDAY</span><span class="d">Stranger</span></div>
+    <div class="big-line" data-om-id="stranger-line" style="top:680px;font-size:64px">By Friday, it's a <span class="gold">stranger</span> again.</div>
+  </div>
+
+  <!-- S3: problem -->
+  <div class="scene" id="s3" data-om-id="scene-problem">
+    <div class="big-line" data-om-id="line-model" style="top:360px;font-size:72px">That's not a <span data-om-id="w-model" style="position:relative;display:inline-block">model problem<svg data-om-id="strike-m" width="460" height="24" viewBox="0 0 460 24" style="position:absolute;left:-14px;top:56px;opacity:0"><path d="M6 12 H454" stroke="#B08D38" stroke-width="10" stroke-linecap="round"/></svg></span>.</div>
+    <div class="big-line" data-om-id="line-mem" style="top:520px;font-size:110px">It's a <span class="gold">MEMORY</span> problem.</div>
+  </div>
+
+  <!-- S4: humaux -->
+  <div class="scene" id="s4" data-om-id="scene-humaux">
+    <div class="big-line" data-om-id="hum-title" style="top:150px;font-size:64px">I'm building <span class="gold">HUMAUX</span></div>
+    <div class="sub-line" data-om-id="hum-sub" style="top:250px">memory for AI agents · cross-session</div>
+    <div class="card3" data-om-id="card-week" style="left:270px;top:420px"><div class="ic">W</div><div class="t">Last week</div><div class="d">it remembers</div></div>
+    <div class="card3" data-om-id="card-month" style="left:750px;top:420px"><div class="ic">M</div><div class="t">Last month</div><div class="d">it remembers</div></div>
+    <div class="card3" data-om-id="card-proj" style="left:1230px;top:420px"><div class="ic">P</div><div class="t">Last project</div><div class="d">it remembers</div></div>
+  </div>
+
+  <!-- S5: no hype -->
+  <div class="scene" id="s5" data-om-id="scene-nohype">
+    <div class="stamp" data-om-id="stamp-nohype" style="left:660px;right:auto;width:600px;top:180px;font-size:64px;letter-spacing:6px">NO HYPE</div>
+    <div class="card3" data-om-id="card-builds" style="left:270px;top:420px"><div class="ic">B</div><div class="t">Real builds</div><div class="d">not slides</div></div>
+    <div class="card3" data-om-id="card-fails" style="left:750px;top:420px"><div class="ic">F</div><div class="t">Real failures</div><div class="d">not filters</div></div>
+    <div class="card3" data-om-id="card-nums" style="left:1230px;top:420px"><div class="ic">#</div><div class="t">Real numbers</div><div class="d">not vibes</div></div>
+  </div>
+
+  <!-- S6: subscribe -->
+  <div class="scene" id="s6" data-om-id="scene-sub">
+    <div class="big-line" data-om-id="sub-q" style="top:300px;font-size:64px">Re-explained yourself to a machine?</div>
+    <div class="big-line" data-om-id="sub-right" style="top:410px;font-size:64px">You're in the <span class="gold">right place</span>.</div>
+    <div class="big-line" data-om-id="sub-cta" style="top:580px;font-size:130px;letter-spacing:4px"><span class="gold">SUBSCRIBE</span></div>
+    <div class="sub-line" data-om-id="sub-stop" style="top:770px">And let's stop starting from zero.</div>
+  </div>
+
+  <!-- S7: end card -->
+  <div class="scene" id="s7" data-om-id="scene-brand">
+    <div class="gold-sweep" data-om-id="sweep" style="left:360px;top:330px;width:0"></div>
+    <div class="brand-kicker" data-om-id="brand-kicker" style="top:270px;opacity:0">Memory, once. Everywhere.</div>
+    <div class="brand-name" data-om-id="brand-name" style="top:390px"><span class="bl">H</span><span class="bl">U</span><span class="bl">M</span><span class="bl" style="color:var(--accent)">A</span><span class="bl">U</span><span class="bl">X</span></div>
+    <div class="brand-sub" data-om-id="brand-sub" style="top:660px;opacity:0">MEMORY FOR AI AGENTS</div>
+  </div>
+
+  <div id="caption" data-om-id="caption"></div>
+</div>
+
+<script>
+  const V = OM.vars();
+  const SENTENCES = [
+    [0.00, "Every AI you talk to starts from zero. Every single time."],
+    [3.60, "You brief it on Monday. By Friday, it's a stranger again."],
+    [6.72, "That's not a model problem. It's a memory problem."],
+    [9.44, "I'm building Humaux: memory for AI agents. Cross-session, so your agent remembers what you told it last week, last month, last project."],
+    [17.82, "On this channel, no hype. Just real builds, real failures, and real numbers."],
+    [22.12, "You'll see the tests I run, the mistakes I make, and the fixes that actually stick."],
+    [26.52, "If you've ever re-explained yourself to a machine, you're in the right place."],
+    [29.94, "Subscribe. And let's stop starting from zero."]
+  ];
+
+  const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+  const show = (sel, at) => tl.set(sel, { opacity: 1, visibility: 'visible' }, at);
+  const capBar = document.getElementById('caption');
+
+  /* captions — one div per sentence, absolute sets (seek-safe, no tl.call) */
+  SENTENCES.forEach(([t, txt], i) => {
+    const d = document.createElement('div');
+    d.className = 'cap-line';
+    const sp = document.createElement('span');
+    sp.textContent = txt;
+    d.appendChild(sp);
+    d.style.display = 'none';
+    capBar.appendChild(d);
+    const end = (i + 1 < SENTENCES.length) ? SENTENCES[i + 1][0] : 32.2;
+    tl.set(d, { display: 'block' }, t);
+    tl.set(d, { display: 'none' }, end);
+  });
+  tl.set(capBar, { opacity: 1 }, 0.1);
+  tl.set(capBar, { opacity: 0 }, 32.2);
+
+  /* S1 hook — FAST */
+  tl.addLabel('scene:hook', 0);
+  show('#s1', 0);
+  tl.fromTo('[data-om-id="hook-main"]', { y: 70, opacity: 0, scale: .92 }, { y: 0, opacity: 1, scale: 1, duration: .7, ease: 'expo.out' }, OM.sfx('impact', 0.1));
+  tl.fromTo('[data-om-id="ring1"]', { opacity: .8, scale: .5 }, { opacity: 0, scale: 1.5, duration: .8, ease: 'expo.out' }, 0.1);
+  tl.fromTo('[data-om-id="hook-sub"]', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .5 }, 1.6);
+  tl.to('#s1', { opacity: 0, duration: .4, ease: 'power2.in' }, 3.3);
+  tl.set('#s1', { visibility: 'hidden' }, 3.7);
+
+  /* S2 stranger — quick flip */
+  tl.addLabel('scene:stranger', 3.6);
+  show('#s2', 3.6);
+  tl.fromTo('[data-om-id="cal-mon"]', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: .5, ease: 'expo.out' }, 3.6);
+  tl.fromTo('[data-om-id="arrow"]', { scale: .5, opacity: 0 }, { scale: 1, opacity: 1, duration: .4, ease: 'back.out(1.7)' }, OM.sfx('whoosh', 4.4));
+  tl.fromTo('[data-om-id="cal-fri"]', { y: 60, opacity: 0 }, { y: 0, opacity: .45, duration: .5, ease: 'expo.out' }, 4.9);
+  tl.fromTo('[data-om-id="stranger-line"]', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .5 }, 5.6);
+  tl.to('#s2', { opacity: 0, duration: .4, ease: 'power2.in' }, 6.45);
+  tl.set('#s2', { visibility: 'hidden' }, 6.85);
+
+  /* S3 problem — BEAT DROP */
+  tl.addLabel('scene:problem', 6.72);
+  show('#s3', 6.72);
+  tl.fromTo('[data-om-id="line-model"]', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: .55 }, 6.72);
+  tl.fromTo('[data-om-id="strike-m"]', { opacity: 0, scaleX: 0, transformOrigin: '0 50%' }, { opacity: 1, scaleX: 1, duration: .35, ease: 'expo.out' }, OM.sfx('draw', 8.0));
+  tl.fromTo('[data-om-id="line-mem"]', { y: 70, opacity: 0, scale: .92 }, { y: 0, opacity: 1, scale: 1, duration: .7, ease: 'expo.out' }, OM.sfx('impact', 8.5));
+  tl.to('#s3', { opacity: 0, duration: .4, ease: 'power2.in' }, 9.15);
+  tl.set('#s3', { visibility: 'hidden' }, 9.55);
+
+  /* S4 humaux — steady build, cards in */
+  tl.addLabel('scene:humaux', 9.44);
+  show('#s4', 9.44);
+  tl.fromTo('[data-om-id="hum-title"]', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: .6 }, 9.44);
+  tl.fromTo('[data-om-id="hum-sub"]', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .5 }, 10.2);
+  tl.fromTo('[data-om-id="card-week"]', { y: 70, opacity: 0, rotation: -3 }, { y: 0, opacity: 1, rotation: 0, duration: .55, ease: 'back.out(1.4)' }, OM.sfx('thud', 13.0));
+  tl.fromTo('[data-om-id="card-month"]', { y: 70, opacity: 0, rotation: 3 }, { y: 0, opacity: 1, rotation: 0, duration: .55, ease: 'back.out(1.4)' }, OM.sfx('thud', 14.6));
+  tl.fromTo('[data-om-id="card-proj"]', { y: 70, opacity: 0, rotation: -3 }, { y: 0, opacity: 1, rotation: 0, duration: .55, ease: 'back.out(1.4)' }, OM.sfx('thud', 16.2));
+  tl.to('#s4', { opacity: 0, duration: .4, ease: 'power2.in' }, 17.5);
+  tl.set('#s4', { visibility: 'hidden' }, 17.9);
+
+  /* S5 no hype — stamp + triplet */
+  tl.addLabel('scene:nohype', 17.82);
+  show('#s5', 17.82);
+  tl.fromTo('[data-om-id="stamp-nohype"]', { scale: 1.4, opacity: 0 }, { scale: 1, opacity: 1, duration: .45, ease: 'expo.out' }, OM.sfx('stamp', 17.9));
+  tl.fromTo('[data-om-id="card-builds"]', { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: .5, ease: 'back.out(1.4)' }, OM.sfx('pop', 19.5));
+  tl.fromTo('[data-om-id="card-fails"]', { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: .5, ease: 'back.out(1.4)' }, OM.sfx('pop', 20.3));
+  tl.fromTo('[data-om-id="card-nums"]', { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: .5, ease: 'back.out(1.4)' }, OM.sfx('pop', 21.1));
+  tl.to('#s5', { opacity: 0, duration: .4, ease: 'power2.in' }, 21.85);
+  tl.set('#s5', { visibility: 'hidden' }, 22.25);
+
+  /* S6 subscribe — deliberate slowdown */
+  tl.addLabel('scene:sub', 22.12);
+  show('#s6', 22.12);
+  tl.fromTo('[data-om-id="sub-q"]', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: .6 }, 22.12);
+  tl.fromTo('[data-om-id="sub-right"]', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: .6 }, 26.6);
+  tl.fromTo('[data-om-id="sub-cta"]', { scale: .8, opacity: 0 }, { scale: 1, opacity: 1, duration: .7, ease: 'expo.out' }, OM.sfx('stamp', 30.0));
+  tl.fromTo('[data-om-id="sub-stop"]', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .5 }, 30.8);
+  tl.to('#s6', { opacity: 0, duration: .4, ease: 'power2.in' }, 31.9);
+  tl.set('#s6', { visibility: 'hidden' }, 32.3);
+
+  /* S7 brand — resolve, calm */
+  tl.addLabel('scene:brand', 32.2);
+  show('#s7', 32.2);
+  tl.to('[data-om-id="sweep"]', { width: 1200, duration: 1.0, ease: 'expo.inOut' }, 32.3);
+  tl.fromTo('[data-om-id="brand-kicker"]', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: .8 }, 32.4);
+  tl.fromTo('#s7 .bl', { y: 90, opacity: 0 }, { y: 0, opacity: 1, duration: .9, stagger: .08, ease: 'expo.out' }, OM.sfx('thud', 32.6));
+  tl.fromTo('[data-om-id="brand-sub"]', { opacity: 0, letterSpacing: '20px' }, { opacity: 1, letterSpacing: '10px', duration: .9 }, OM.sfx('chime', 33.2));
+  tl.to({}, { duration: V.endHold });
+
+  window.__timelines['film'] = tl;
+  OM.music({ product: 'ai' });
+</script>
+</body>
+</html>
