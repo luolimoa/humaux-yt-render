@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   render:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -29,6 +29,7 @@ jobs:
       - name: Check runner tools
         run: |
           node --version
+          command -v ffmpeg >/dev/null 2>&1 || brew install ffmpeg
           ffmpeg -version | head -1
           ls /usr/bin/google-chrome && /usr/bin/google-chrome --version
 
@@ -46,7 +47,7 @@ jobs:
           base64 -d assets/fonts/NotoSansSC-700.woff.b64 > assets/fonts/NotoSansSC-700.woff
           base64 -d assets/fonts/NotoSansSC-800.woff.b64 > assets/fonts/NotoSansSC-800.woff
           base64 -d assets/fonts/NotoSansSC-900.woff.b64 > assets/fonts/NotoSansSC-900.woff
-          sha256sum -c <<'EOF'
+          shasum -a 256 -c <<'EOF'
           ea3dcf33fdae18b3fd1e56e46a122317be50554ec7f9d122bd4ed07130c42466  assets/voice.wav
           928d841b1ec663ebce82593568cbc19749fe652f88b8ec960723b7d87b551512  assets/fonts/NotoSansSC-500.woff
           dd0d39a9780eb995c499af0c20cca93b1dfdda865da70871a20890b3e406b968  assets/fonts/NotoSansSC-700.woff
@@ -57,8 +58,6 @@ jobs:
           ls -la assets assets/fonts
 
       - name: Render
-        env:
-          OM_CHROME: /usr/bin/google-chrome
         run: |
           cd tool
           node cli/om.js sound humaux-yt-001-welcome
