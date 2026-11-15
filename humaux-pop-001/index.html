@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[
+  {"id":"bpm","type":"number","label":"BPM（音乐卡点；pulse 风格范围 116–124）","default":120,"min":100,"max":140,"step":1,"group":"rhythm"},
+  {"id":"endHold","type":"number","label":"end hold (s)","default":1.8,"min":0,"max":10,"step":0.1,"group":"rhythm"},
+  {"id":"hookWord","type":"string","label":"钩子巨字","default":"AMNESIA?","group":"hook"},
+  {"id":"brandWord","type":"string","label":"品牌巨字","default":"HUMAUX","group":"solution"}
+]'>
+<head>
+<meta charset="utf-8">
+<title>Your AI Has Amnesia · Humaux POP-001</title>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/om.js"></script>
+<script src="pop.js"></script>
+<link rel="stylesheet" href="pop.css">
+<style id="om-fonts">
+@font-face { font-family: "Anton"; src: url("assets/fonts/Anton-400.woff") format("woff"); font-weight: 400; font-style: normal; }
+@font-face { font-family: "Noto Sans SC"; src: url("assets/fonts/NotoSansSC-500.woff") format("woff"); font-weight: 500; font-style: normal; }
+@font-face { font-family: "Noto Sans SC"; src: url("assets/fonts/NotoSansSC-700.woff") format("woff"); font-weight: 700; font-style: normal; }
+@font-face { font-family: "Noto Sans SC"; src: url("assets/fonts/NotoSansSC-800.woff") format("woff"); font-weight: 800; font-style: normal; }
+@font-face { font-family: "Noto Sans SC"; src: url("assets/fonts/NotoSansSC-900.woff") format("woff"); font-weight: 900; font-style: normal; }
+</style>
+<style>
+  /* scene-local layout only; the system lives in pop.css */
+  .center-line { position: absolute; left: 0; right: 0; text-align: center; }
+  .strike-wrap { position: relative; display: inline-block; }
+  .strike-wrap svg { position: absolute; left: -12px; top: 52%; overflow: visible; }
+  #s1 .hook-word { top: 250px; font-size: 230px; }
+  #s1 .hook-sub { top: 560px; font-size: 56px; font-weight: 900; color: rgba(26,26,26,.62); }
+  #s1 .chat1 { left: 1180px; top: 640px; width: 620px; }
+  #s1 .sticker1 { left: 150px; top: 180px; }
+  #s2 .check { left: 180px; top: 300px; width: 900px; }
+  #s2 .mem-bar { left: 1180px; top: 380px; width: 560px; height: 44px; }
+  #s2 .mem-label { left: 1180px; top: 320px; }
+  #s2 .mem-pct { left: 1180px; top: 450px; font-size: 110px; }
+  #s2 .sticker2 { left: 1180px; top: 620px; }
+  #s3 .line-model { top: 330px; font-size: 84px; }
+  #s3 .line-mem { top: 520px; font-size: 150px; }
+  #s3 .tog { left: 810px; top: 760px; }
+  #s3 .tog-label { left: 1010px; top: 782px; font-size: 40px; font-weight: 900; color: #fff; }
+  #s4 .brand-word { top: 200px; font-size: 210px; }
+  #s4 .brand-sub { top: 470px; font-size: 52px; font-weight: 900; color: rgba(26,26,26,.62); }
+  #s4 .card1 { left: 240px; top: 620px; width: 420px; height: 300px; }
+  #s4 .card2 { left: 750px; top: 620px; width: 420px; height: 300px; }
+  #s4 .card3 { left: 1260px; top: 620px; width: 420px; height: 300px; }
+  #s4 .sticker4 { left: 830px; top: 130px; }
+  #s5 .stamp-line { top: 260px; font-size: 190px; }
+  #s5 .card1 { left: 240px; top: 580px; width: 420px; height: 300px; }
+  #s5 .card2 { left: 750px; top: 580px; width: 420px; height: 300px; }
+  #s5 .card3 { left: 1260px; top: 580px; width: 420px; height: 300px; }
+  #s5 .sub5 { top: 920px; font-size: 44px; font-weight: 900; color: rgba(26,26,26,.62); }
+  #s6 .rem-bar { left: 460px; top: 300px; width: 1000px; height: 54px; }
+  #s6 .rem-label { left: 460px; top: 240px; font-size: 34px; }
+  #s6 .cta-line { top: 430px; font-size: 130px; }
+  #s6 .cta-line2 { top: 590px; font-size: 130px; }
+  #s6 .end-line { top: 800px; font-size: 48px; font-weight: 900; letter-spacing: 8px; color: var(--pop-pink); }
+  #s6 .sticker6 { left: 1450px; top: 170px; }
+</style>
+<script type="application/json" id="om-cues">{"source":"tts:kokoro:af_heart","precision":"tts","offset":0,"duration":29.646,"words":[
+{"word":"Your","start":0,"end":0.211},
+{"word":"AI","start":0.211,"end":0.423},
+{"word":"has","start":0.423,"end":0.634},
+{"word":"amnesia","start":0.634,"end":1.268},
+{"word":"Every","start":1.518,"end":1.969},
+{"word":"single","start":1.969,"end":2.269},
+{"word":"time","start":2.269,"end":2.569},
+{"word":"You","start":2.82,"end":3.006},
+{"word":"brief","start":3.006,"end":3.192},
+{"word":"it","start":3.192,"end":3.378},
+{"word":"on","start":3.378,"end":3.564},
+{"word":"Monday","start":3.564,"end":3.937},
+{"word":"By","start":4.187,"end":4.408},
+{"word":"Friday","start":4.408,"end":4.851},
+{"word":"it's","start":5.007,"end":5.298},
+{"word":"a","start":5.298,"end":5.444},
+{"word":"stranger","start":5.444,"end":5.735},
+{"word":"again","start":5.735,"end":6.027},
+{"word":"You","start":6.277,"end":6.507},
+{"word":"told","start":6.507,"end":6.738},
+{"word":"it","start":6.738,"end":6.968},
+{"word":"last","start":6.968,"end":7.198},
+{"word":"week","start":7.198,"end":7.429},
+{"word":"It","start":7.679,"end":7.853},
+{"word":"has","start":7.853,"end":8.028},
+{"word":"no","start":8.028,"end":8.202},
+{"word":"idea","start":8.202,"end":8.551},
+{"word":"what","start":8.551,"end":8.725},
+{"word":"you","start":8.725,"end":8.9},
+{"word":"mean","start":8.9,"end":9.074},
+{"word":"That's","start":9.324,"end":9.659},
+{"word":"not","start":9.659,"end":9.826},
+{"word":"a","start":9.826,"end":9.994},
+{"word":"model","start":9.994,"end":10.329},
+{"word":"problem","start":10.329,"end":10.664},
+{"word":"It's","start":10.914,"end":11.21},
+{"word":"a","start":11.21,"end":11.359},
+{"word":"memory","start":11.359,"end":11.804},
+{"word":"problem","start":11.804,"end":12.101},
+{"word":"Humaux","start":12.35,"end":12.781},
+{"word":"is","start":12.781,"end":12.996},
+{"word":"memory","start":12.996,"end":13.643},
+{"word":"for","start":13.643,"end":13.858},
+{"word":"AI","start":13.858,"end":14.073},
+{"word":"agents","start":14.073,"end":14.504},
+{"word":"Cross-session","start":14.754,"end":15.49},
+{"word":"Your","start":15.739,"end":15.918},
+{"word":"agent","start":15.918,"end":16.276},
+{"word":"remembers","start":16.276,"end":16.813},
+{"word":"what","start":16.813,"end":16.992},
+{"word":"you","start":16.992,"end":17.171},
+{"word":"told","start":17.171,"end":17.35},
+{"word":"it","start":17.35,"end":17.529},
+{"word":"last","start":17.529,"end":17.708},
+{"word":"week","start":17.708,"end":17.887},
+{"word":"last","start":18.127,"end":18.38},
+{"word":"month","start":18.38,"end":18.633},
+{"word":"last","start":18.896,"end":19.187},
+{"word":"project","start":19.187,"end":19.769},
+{"word":"On","start":20.02,"end":20.205},
+{"word":"this","start":20.205,"end":20.391},
+{"word":"channel","start":20.391,"end":20.762},
+{"word":"no","start":20.78,"end":20.966},
+{"word":"hype","start":20.966,"end":21.337},
+{"word":"Just","start":21.587,"end":21.814},
+{"word":"real","start":21.814,"end":22.041},
+{"word":"builds","start":22.041,"end":22.269},
+{"word":"real","start":22.269,"end":22.724},
+{"word":"failures","start":22.724,"end":23.4},
+{"word":"and","start":23.4,"end":23.625},
+{"word":"real","start":23.625,"end":23.85},
+{"word":"numbers","start":23.85,"end":24.301},
+{"word":"No","start":24.551,"end":24.726},
+{"word":"more","start":24.726,"end":25.076},
+{"word":"repeating","start":25.076,"end":25.601},
+{"word":"yourself","start":25.601,"end":25.951},
+{"word":"No","start":26.201,"end":26.382},
+{"word":"more","start":26.382,"end":26.743},
+{"word":"starting","start":26.743,"end":27.104},
+{"word":"from","start":27.104,"end":27.284},
+{"word":"zero","start":27.284,"end":27.645},
+{"word":"Memory","start":27.895,"end":28.42},
+{"word":"once","start":28.437,"end":28.786},
+{"word":"Everywhere","start":29.036,"end":29.646}
+]}</script>
+</head>
+<body>
+<!--
+  POP-001 《Your AI Has Amnesia》— pop kinetic-typography verification film.
+  System: pop.css (tokens / display type / textures / UI / HUD) + pop.js
+  (karaoke, HUD, BPM helpers). 120 BPM, beat = 0.5 s; every scene cut lands
+  on a beat so the picture locks to the pulse music bed.
+  Lessons applied: root has data-composition-id/width/height; scenes get
+  visibility:hidden after exit; motion uses transform, never left; captions
+  are per-sentence divs switched with tl.set (seek-safe); no literal
+  video tag in JS comments.
+-->
+<audio id="om-voice" src="assets/voice.wav" data-start="0" data-duration="29.646" data-track-index="9" data-volume="1"></audio>
+<div id="film" data-composition-id="film" data-width="1920" data-height="1080">
+
+  <!-- S1: hook — AMNESIA? + chat bubble -->
+  <div class="scene bg-dots" id="s1" data-om-id="scene-hook">
+    <div class="sticker sticker1" data-om-id="sticker-pop">POP!</div>
+    <div class="center-line pop-display hook-word" id="hook-word" data-om-id="hook-word">{{hookWord}}</div>
+    <div class="center-line hook-sub" data-om-id="hook-sub">Every single time.</div>
+    <div class="chat-bubble chat1" data-om-id="chat-forget">
+      <div class="who">YOU · YESTERDAY</div>
+      <div class="msg">What did I tell you yesterday?</div>
+      <div class="msg" style="color:var(--pop-pink)">I don't know.</div>
+    </div>
+  </div>
+
+  <!-- S2: problem — checklist + memory 0% -->
+  <div class="scene bg-grid" id="s2" data-om-id="scene-problem">
+    <div class="checklist check" data-om-id="checklist">
+      <div class="row" data-om-id="chk-1"><span class="num">1</span> MONDAY — briefed <span class="mark" style="color:#2E9E5B">✓</span></div>
+      <div class="row" data-om-id="chk-2"><span class="num">2</span> FRIDAY — stranger <span class="mark" style="color:var(--pop-pink)">✗</span></div>
+      <div class="row" data-om-id="chk-3"><span class="num">3</span> LAST WEEK — told it <span class="mark" style="color:#2E9E5B">✓</span></div>
+      <div class="row" data-om-id="chk-4"><span class="num">4</span> TODAY — no idea <span class="mark" style="color:var(--pop-pink)">✗</span></div>
+    </div>
+    <div class="loadbar-label mem-label" data-om-id="mem-label">MEMORY</div>
+    <div class="loadbar mem-bar" data-om-id="mem-bar"><div class="fill" id="mem-fill"></div></div>
+    <div class="pop-display mem-pct" id="mem-pct" data-om-id="mem-pct">0%</div>
+    <div class="sticker sticker--pink sticker2" data-om-id="sticker-forgot">FORGOT IT</div>
+  </div>
+
+  <!-- S3: diagnosis — not a model problem, a memory problem -->
+  <div class="scene bg-halftone" id="s3" data-om-id="scene-diagnosis">
+    <div class="center-line pop-display--on-dark line-model" data-om-id="line-model" style="font-size:84px;font-weight:900">That's not a
+      <span class="strike-wrap">MODEL PROBLEM<svg data-om-id="strike-m" width="560" height="26" viewBox="0 0 560 26"><path d="M6 13 H554" stroke="#FF5C8A" stroke-width="12" stroke-linecap="round"/></svg></span>.
+    </div>
+    <div class="center-line pop-display line-mem" id="mem-word" data-om-id="line-mem">A MEMORY PROBLEM.</div>
+    <div class="toggle tog" id="tog" data-om-id="toggle"><span class="state off">MODEL</span><span class="state on">MEMORY</span><span class="knob"></span></div>
+    <div class="tog-label" data-om-id="toggle-label">← flip it</div>
+  </div>
+
+  <!-- S4: solution — HUMAUX + three cards -->
+  <div class="scene bg-rays" id="s4" data-om-id="scene-solution">
+    <div class="sticker sticker--cyan sticker4" data-om-id="sticker-cross">CROSS-SESSION</div>
+    <div class="center-line pop-display brand-word" id="brand-word" data-om-id="brand-word">{{brandWord}}</div>
+    <div class="center-line brand-sub" data-om-id="brand-sub">memory for AI agents</div>
+    <div class="pop-card card1" data-om-id="card-week"><div class="ic">1</div><div class="t">LAST WEEK</div><div class="d">what you told it</div></div>
+    <div class="pop-card card2" data-om-id="card-month"><div class="ic" style="background:var(--pop-cyan)">2</div><div class="t">LAST MONTH</div><div class="d">what you built</div></div>
+    <div class="pop-card card3" data-om-id="card-proj"><div class="ic" style="background:var(--pop-yellow);color:var(--pop-ink)">3</div><div class="t">LAST PROJECT</div><div class="d">what you decided</div></div>
+  </div>
+
+  <!-- S5: no hype — stamp + triplet -->
+  <div class="scene bg-dots--pink" id="s5" data-om-id="scene-nohype">
+    <div class="center-line pop-display stamp-line" id="nohype-word" data-om-id="stamp-nohype">NO HYPE.</div>
+    <div class="pop-card card1" data-om-id="card-builds"><div class="ic">B</div><div class="t">BUILDS</div><div class="d">real, shipped</div></div>
+    <div class="pop-card card2" data-om-id="card-fails"><div class="ic" style="background:var(--pop-cyan)">F</div><div class="t">FAILURES</div><div class="d">real, owned</div></div>
+    <div class="pop-card card3" data-om-id="card-nums"><div class="ic" style="background:var(--pop-yellow);color:var(--pop-ink)">N</div><div class="t">NUMBERS</div><div class="d">real, measured</div></div>
+    <div class="center-line sub5" data-om-id="sub-nohype">Just real builds, real failures, and real numbers.</div>
+  </div>
+
+  <!-- S6: CTA — remembered 100% + stop starting from zero -->
+  <div class="scene bg-solid-yellow" id="s6" data-om-id="scene-cta">
+    <div class="sticker sticker--mint sticker6" data-om-id="sticker-verified">E3 VERIFIED</div>
+    <div class="loadbar-label rem-label" data-om-id="rem-label">REMEMBERED</div>
+    <div class="loadbar loadbar--mint rem-bar" data-om-id="rem-bar"><div class="fill" id="rem-fill"></div></div>
+    <div class="center-line pop-display cta-line" id="cta-1" data-om-id="cta-1">STOP STARTING</div>
+    <div class="center-line pop-display cta-line2" id="cta-2" data-om-id="cta-2">FROM ZERO.</div>
+    <div class="center-line end-line" data-om-id="end-line">MEMORY, ONCE. EVERYWHERE.</div>
+  </div>
+
+  <!-- HUD: four-corner persistent overlay -->
+  <div id="hud" data-om-id="hud">
+    <div class="hud-tl"><div class="title">HUMAUX POP-001</div><div class="section"><div class="sec" data-sec="1">#1 HOOK</div><div class="sec" data-sec="2">#2 PROBLEM</div><div class="sec" data-sec="3">#3 DIAGNOSIS</div><div class="sec" data-sec="4">#4 SOLUTION</div><div class="sec" data-sec="5">#5 NO HYPE</div><div class="sec" data-sec="6">#6 CTA</div></div></div>
+    <div class="hud-tr">MEMORY 0%</div>
+    <div class="hud-bl">120 BPM · BAR 01.1</div>
+    <div class="hud-br"><div class="track"><div class="fill"></div></div><div class="pct">0%</div></div>
+  </div>
+
+  <div id="caption" data-om-id="caption"></div>
+</div>
+
+<script>
+  var V = OM.vars();
+  POP.bpm = V.bpm || 120;
+  var BEAT = POP.beat();           // 0.5 s at 120 BPM
+  var B = function (n) { return n * BEAT; };  // beat n -> seconds
+
+  /* Sentence times are filled in from the real voice cues after
+     `om voice` runs (see tools/sentences.json). Below are the real
+     Kokoro af_heart 1.12x cues for this script (voice 29.65 s). */
+  var SENTENCES = [
+    [0.00, "Your AI has amnesia."],
+    [1.52, "Every single time."],
+    [2.82, "You brief it on Monday."],
+    [4.19, "By Friday, it's a stranger again."],
+    [6.28, "You told it last week."],
+    [7.68, "It has no idea what you mean."],
+    [9.32, "That's not a model problem."],
+    [10.91, "It's a memory problem."],
+    [12.35, "Humaux is memory for AI agents."],
+    [14.75, "Cross-session."],
+    [15.74, "Your agent remembers what you told it last week, last month, last project."],
+    [20.02, "On this channel, no hype."],
+    [21.59, "Just real builds, real failures, and real numbers."],
+    [24.55, "No more repeating yourself."],
+    [26.20, "No more starting from zero."],
+    [27.89, "Memory, once."],
+    [29.04, "Everywhere."]
+  ];
+  var VOICE_END = 29.65;
+
+  var tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+  var show = function (sel, at) { tl.set(sel, { opacity: 1, visibility: 'visible' }, at); };
+  var hide = function (sel, at) { tl.to(sel, { opacity: 0, duration: 0.35, ease: 'power2.in' }, at); tl.set(sel, { visibility: 'hidden' }, at + 0.4); };
+  var capBar = document.getElementById('caption');
+
+  /* captions — one div per sentence, absolute sets (seek-safe) */
+  SENTENCES.forEach(function (pair, i) {
+    var t = pair[0], txt = pair[1];
+    var d = document.createElement('div');
+    d.className = 'cap-line';
+    var sp = document.createElement('span');
+    sp.textContent = txt;
+    d.appendChild(sp);
+    d.style.display = 'none';
+    capBar.appendChild(d);
+    var end = (i + 1 < SENTENCES.length) ? SENTENCES[i + 1][0] : VOICE_END;
+    tl.set(d, { display: 'block' }, t);
+    tl.set(d, { display: 'none' }, end);
+  });
+  tl.set(capBar, { opacity: 1 }, 0.1);
+  tl.set(capBar, { opacity: 0 }, VOICE_END);
+
+  /* HUD section labels — one div per section, tl.set display (seek-safe,
+     same pattern as captions). Boundaries match the scene cuts. */
+  var SEC_AT = [[1, B(0)], [2, B(5)], [3, B(20)], [4, B(27)], [5, B(41)], [6, B(50)]];
+  SEC_AT.forEach(function (pair, i) {
+    var n = pair[0], t = pair[1];
+    tl.set('[data-sec="' + n + '"]', { display: 'block' }, t);
+    var next = (i + 1 < SEC_AT.length) ? SEC_AT[i + 1][1] : VOICE_END;
+    tl.set('[data-sec="' + n + '"]', { display: 'none' }, next);
+  });
+
+  /* HUD — init + counter 0->100% + progress 0->100% */
+  POP.hud.init({ title: 'HUMAUX POP-001', bpm: POP.bpm });
+  POP.hud.tick(tl);
+  POP.hud.counterTo(tl, 0, 100, B(0), VOICE_END, function (v) { return 'MEMORY ' + Math.round(v) + '%'; });
+  POP.hud.progressTo(tl, B(0), VOICE_END);
+
+  /* karaoke spans (built once, animated per scene) */
+  var hookChars = POP.karaoke(document.getElementById('hook-word'));
+  var brandChars = POP.karaoke(document.getElementById('brand-word'));
+  var nohypeChars = POP.karaoke(document.getElementById('nohype-word'));
+  var ctaChars1 = POP.karaoke(document.getElementById('cta-1'));
+  var ctaChars2 = POP.karaoke(document.getElementById('cta-2'));
+  var memChars = POP.karaoke(document.getElementById('mem-word'));
+  var karaPop = function (chars, at, sfx) {
+    tl.fromTo(chars, { scale: 0, y: 46, opacity: 0 },
+      { scale: 1, y: 0, opacity: 1, duration: 0.38, stagger: 0.05, ease: 'back.out(2.2)' },
+      sfx ? OM.sfx(sfx, at) : at);
+  };
+
+  /* ---- S1 hook (beats 0–5) ---- */
+  tl.addLabel('scene:hook', B(0));
+  show('#s1', B(0));
+  karaPop(hookChars, B(0), 'impact');
+  tl.fromTo('[data-om-id="hook-sub"]', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, B(3));
+  tl.fromTo('[data-om-id="sticker-pop"]', { scale: 0, rotation: -20, opacity: 0 }, { scale: 1, rotation: -4, opacity: 1, duration: 0.4, ease: 'back.out(2.5)' }, OM.sfx('pop', B(2)));
+  tl.fromTo('[data-om-id="chat-forget"]', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'back.out(1.4)' }, B(4));
+  hide('#s1', B(5));
+
+  /* ---- S2 problem (beats 5–20) ---- */
+  tl.addLabel('scene:problem', B(5));
+  show('#s2', B(5));
+  tl.fromTo('[data-om-id="chk-1"]', { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45 }, OM.sfx('pop', B(5)));
+  tl.fromTo('[data-om-id="chk-2"]', { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45 }, OM.sfx('pop', B(8)));
+  tl.fromTo('[data-om-id="chk-3"]', { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45 }, OM.sfx('pop', B(12)));
+  tl.fromTo('[data-om-id="chk-4"]', { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.45 }, OM.sfx('pop', B(15)));
+  tl.fromTo('[data-om-id="mem-label"]', { opacity: 0 }, { opacity: 1, duration: 0.4 }, B(6));
+  tl.fromTo('[data-om-id="mem-bar"]', { opacity: 0 }, { opacity: 1, duration: 0.4 }, B(6));
+  tl.fromTo('[data-om-id="mem-pct"]', { opacity: 0 }, { opacity: 1, duration: 0.4 }, B(6));
+  tl.fromTo('[data-om-id="sticker-forgot"]', { scale: 0, rotation: 12, opacity: 0 }, { scale: 1, rotation: -4, opacity: 1, duration: 0.4, ease: 'back.out(2.5)' }, OM.sfx('stamp', B(18)));
+  hide('#s2', B(20));
+
+  /* ---- S3 diagnosis (beats 20–27) ---- */
+  tl.addLabel('scene:diagnosis', B(20));
+  show('#s3', B(20));
+  tl.fromTo('[data-om-id="line-model"]', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55 }, B(20));
+  tl.fromTo('[data-om-id="strike-m"]', { opacity: 0, scaleX: 0, transformOrigin: '0 50%' }, { opacity: 1, scaleX: 1, duration: 0.35, ease: 'expo.out' }, OM.sfx('draw', B(23)));
+  karaPop(memChars, B(24), 'impact');
+  tl.fromTo('[data-om-id="toggle"]', { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(1.7)' }, B(25));
+  tl.fromTo('[data-om-id="toggle-label"]', { opacity: 0 }, { opacity: 1, duration: 0.4 }, B(25));
+  tl.set('#tog', { attr: { class: 'toggle tog on' } }, B(26));
+  hide('#s3', B(27));
+
+  /* ---- S4 solution (beats 27–41) ---- */
+  tl.addLabel('scene:solution', B(27));
+  show('#s4', B(27));
+  karaPop(brandChars, B(27), 'impact');
+  tl.fromTo('[data-om-id="sticker-cross"]', { scale: 0, rotation: 12, opacity: 0 }, { scale: 1, rotation: -4, opacity: 1, duration: 0.4, ease: 'back.out(2.5)' }, OM.sfx('pop', B(29)));
+  tl.fromTo('[data-om-id="brand-sub"]', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, B(30));
+  tl.fromTo('[data-om-id="card-week"]', { y: 70, opacity: 0, rotation: -3 }, { y: 0, opacity: 1, rotation: 0, duration: 0.55, ease: 'back.out(1.4)' }, OM.sfx('thud', B(33)));
+  tl.fromTo('[data-om-id="card-month"]', { y: 70, opacity: 0, rotation: 3 }, { y: 0, opacity: 1, rotation: 0, duration: 0.55, ease: 'back.out(1.4)' }, OM.sfx('thud', B(36)));
+  tl.fromTo('[data-om-id="card-proj"]', { y: 70, opacity: 0, rotation: -3 }, { y: 0, opacity: 1, rotation: 0, duration: 0.55, ease: 'back.out(1.4)' }, OM.sfx('thud', B(39)));
+  hide('#s4', B(41));
+
+  /* ---- S5 no hype (beats 41–50) ---- */
+  tl.addLabel('scene:nohype', B(41));
+  show('#s5', B(41));
+  karaPop(nohypeChars, B(41), 'stamp');
+  tl.fromTo('[data-om-id="card-builds"]', { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'back.out(1.4)' }, OM.sfx('pop', B(44)));
+  tl.fromTo('[data-om-id="card-fails"]', { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'back.out(1.4)' }, OM.sfx('pop', B(46)));
+  tl.fromTo('[data-om-id="card-nums"]', { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'back.out(1.4)' }, OM.sfx('pop', B(48)));
+  tl.fromTo('[data-om-id="sub-nohype"]', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, B(48));
+  hide('#s5', B(50));
+
+  /* ---- S6 CTA (beats 50–end) ---- */
+  tl.addLabel('scene:cta', B(50));
+  show('#s6', B(50));
+  tl.fromTo('[data-om-id="rem-label"]', { opacity: 0 }, { opacity: 1, duration: 0.4 }, B(50));
+  tl.fromTo('[data-om-id="rem-bar"]', { opacity: 0 }, { opacity: 1, duration: 0.4 }, B(50));
+  tl.to('#rem-fill', { width: '100%', duration: 3.0, ease: 'power1.inOut' }, B(50));
+  tl.fromTo('[data-om-id="sticker-verified"]', { scale: 0, rotation: 12, opacity: 0 }, { scale: 1, rotation: -4, opacity: 1, duration: 0.4, ease: 'back.out(2.5)' }, OM.sfx('stamp', B(52)));
+  karaPop(ctaChars1, B(51), 'impact');
+  karaPop(ctaChars2, B(54), 'impact');
+  tl.fromTo('[data-om-id="end-line"]', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, OM.sfx('chime', B(57)));
+  tl.to({}, { duration: V.endHold });
+
+  window.__timelines['film'] = tl;
+  OM.music({ style: 'pulse' });
+</script>
+</body>
+</html>

@@ -1,0 +1,515 @@
+{
+ "source": "tts:kokoro:af_heart",
+ "precision": "tts",
+ "offset": 0,
+ "duration": 29.646,
+ "sentences": [
+  {
+   "text": "Your AI has amnesia.",
+   "start": 0,
+   "end": 1.268
+  },
+  {
+   "text": "Every single time.",
+   "start": 1.518,
+   "end": 2.569
+  },
+  {
+   "text": "You brief it on Monday.",
+   "start": 2.82,
+   "end": 3.937
+  },
+  {
+   "text": "By Friday, it's a stranger again.",
+   "start": 4.187,
+   "end": 6.027
+  },
+  {
+   "text": "You told it last week.",
+   "start": 6.277,
+   "end": 7.429
+  },
+  {
+   "text": "It has no idea what you mean.",
+   "start": 7.679,
+   "end": 9.074
+  },
+  {
+   "text": "That's not a model problem.",
+   "start": 9.324,
+   "end": 10.664
+  },
+  {
+   "text": "It's a memory problem.",
+   "start": 10.914,
+   "end": 12.101
+  },
+  {
+   "text": "Humaux is memory for AI agents.",
+   "start": 12.35,
+   "end": 14.504
+  },
+  {
+   "text": "Cross-session.",
+   "start": 14.754,
+   "end": 15.49
+  },
+  {
+   "text": "Your agent remembers what you told it last week, last month, last project.",
+   "start": 15.739,
+   "end": 19.769
+  },
+  {
+   "text": "On this channel, no hype.",
+   "start": 20.02,
+   "end": 21.337
+  },
+  {
+   "text": "Just real builds, real failures, and real numbers.",
+   "start": 21.587,
+   "end": 24.301
+  },
+  {
+   "text": "No more repeating yourself.",
+   "start": 24.551,
+   "end": 25.951
+  },
+  {
+   "text": "No more starting from zero.",
+   "start": 26.201,
+   "end": 27.645
+  },
+  {
+   "text": "Memory, once.",
+   "start": 27.895,
+   "end": 28.786
+  },
+  {
+   "text": "Everywhere.",
+   "start": 29.036,
+   "end": 29.646
+  }
+ ],
+ "words": [
+  {
+   "word": "Your",
+   "start": 0,
+   "end": 0.211
+  },
+  {
+   "word": "AI",
+   "start": 0.211,
+   "end": 0.423
+  },
+  {
+   "word": "has",
+   "start": 0.423,
+   "end": 0.634
+  },
+  {
+   "word": "amnesia",
+   "start": 0.634,
+   "end": 1.268
+  },
+  {
+   "word": "Every",
+   "start": 1.518,
+   "end": 1.969
+  },
+  {
+   "word": "single",
+   "start": 1.969,
+   "end": 2.269
+  },
+  {
+   "word": "time",
+   "start": 2.269,
+   "end": 2.569
+  },
+  {
+   "word": "You",
+   "start": 2.82,
+   "end": 3.006
+  },
+  {
+   "word": "brief",
+   "start": 3.006,
+   "end": 3.192
+  },
+  {
+   "word": "it",
+   "start": 3.192,
+   "end": 3.378
+  },
+  {
+   "word": "on",
+   "start": 3.378,
+   "end": 3.564
+  },
+  {
+   "word": "Monday",
+   "start": 3.564,
+   "end": 3.937
+  },
+  {
+   "word": "By",
+   "start": 4.187,
+   "end": 4.408
+  },
+  {
+   "word": "Friday",
+   "start": 4.408,
+   "end": 4.851
+  },
+  {
+   "word": "it's",
+   "start": 5.007,
+   "end": 5.298
+  },
+  {
+   "word": "a",
+   "start": 5.298,
+   "end": 5.444
+  },
+  {
+   "word": "stranger",
+   "start": 5.444,
+   "end": 5.735
+  },
+  {
+   "word": "again",
+   "start": 5.735,
+   "end": 6.027
+  },
+  {
+   "word": "You",
+   "start": 6.277,
+   "end": 6.507
+  },
+  {
+   "word": "told",
+   "start": 6.507,
+   "end": 6.738
+  },
+  {
+   "word": "it",
+   "start": 6.738,
+   "end": 6.968
+  },
+  {
+   "word": "last",
+   "start": 6.968,
+   "end": 7.198
+  },
+  {
+   "word": "week",
+   "start": 7.198,
+   "end": 7.429
+  },
+  {
+   "word": "It",
+   "start": 7.679,
+   "end": 7.853
+  },
+  {
+   "word": "has",
+   "start": 7.853,
+   "end": 8.028
+  },
+  {
+   "word": "no",
+   "start": 8.028,
+   "end": 8.202
+  },
+  {
+   "word": "idea",
+   "start": 8.202,
+   "end": 8.551
+  },
+  {
+   "word": "what",
+   "start": 8.551,
+   "end": 8.725
+  },
+  {
+   "word": "you",
+   "start": 8.725,
+   "end": 8.9
+  },
+  {
+   "word": "mean",
+   "start": 8.9,
+   "end": 9.074
+  },
+  {
+   "word": "That's",
+   "start": 9.324,
+   "end": 9.659
+  },
+  {
+   "word": "not",
+   "start": 9.659,
+   "end": 9.826
+  },
+  {
+   "word": "a",
+   "start": 9.826,
+   "end": 9.994
+  },
+  {
+   "word": "model",
+   "start": 9.994,
+   "end": 10.329
+  },
+  {
+   "word": "problem",
+   "start": 10.329,
+   "end": 10.664
+  },
+  {
+   "word": "It's",
+   "start": 10.914,
+   "end": 11.21
+  },
+  {
+   "word": "a",
+   "start": 11.21,
+   "end": 11.359
+  },
+  {
+   "word": "memory",
+   "start": 11.359,
+   "end": 11.804
+  },
+  {
+   "word": "problem",
+   "start": 11.804,
+   "end": 12.101
+  },
+  {
+   "word": "Humaux",
+   "start": 12.35,
+   "end": 12.781
+  },
+  {
+   "word": "is",
+   "start": 12.781,
+   "end": 12.996
+  },
+  {
+   "word": "memory",
+   "start": 12.996,
+   "end": 13.643
+  },
+  {
+   "word": "for",
+   "start": 13.643,
+   "end": 13.858
+  },
+  {
+   "word": "AI",
+   "start": 13.858,
+   "end": 14.073
+  },
+  {
+   "word": "agents",
+   "start": 14.073,
+   "end": 14.504
+  },
+  {
+   "word": "Cross-session",
+   "start": 14.754,
+   "end": 15.49
+  },
+  {
+   "word": "Your",
+   "start": 15.739,
+   "end": 15.918
+  },
+  {
+   "word": "agent",
+   "start": 15.918,
+   "end": 16.276
+  },
+  {
+   "word": "remembers",
+   "start": 16.276,
+   "end": 16.813
+  },
+  {
+   "word": "what",
+   "start": 16.813,
+   "end": 16.992
+  },
+  {
+   "word": "you",
+   "start": 16.992,
+   "end": 17.171
+  },
+  {
+   "word": "told",
+   "start": 17.171,
+   "end": 17.35
+  },
+  {
+   "word": "it",
+   "start": 17.35,
+   "end": 17.529
+  },
+  {
+   "word": "last",
+   "start": 17.529,
+   "end": 17.708
+  },
+  {
+   "word": "week",
+   "start": 17.708,
+   "end": 17.887
+  },
+  {
+   "word": "last",
+   "start": 18.127,
+   "end": 18.38
+  },
+  {
+   "word": "month",
+   "start": 18.38,
+   "end": 18.633
+  },
+  {
+   "word": "last",
+   "start": 18.896,
+   "end": 19.187
+  },
+  {
+   "word": "project",
+   "start": 19.187,
+   "end": 19.769
+  },
+  {
+   "word": "On",
+   "start": 20.02,
+   "end": 20.205
+  },
+  {
+   "word": "this",
+   "start": 20.205,
+   "end": 20.391
+  },
+  {
+   "word": "channel",
+   "start": 20.391,
+   "end": 20.762
+  },
+  {
+   "word": "no",
+   "start": 20.78,
+   "end": 20.966
+  },
+  {
+   "word": "hype",
+   "start": 20.966,
+   "end": 21.337
+  },
+  {
+   "word": "Just",
+   "start": 21.587,
+   "end": 21.814
+  },
+  {
+   "word": "real",
+   "start": 21.814,
+   "end": 22.041
+  },
+  {
+   "word": "builds",
+   "start": 22.041,
+   "end": 22.269
+  },
+  {
+   "word": "real",
+   "start": 22.269,
+   "end": 22.724
+  },
+  {
+   "word": "failures",
+   "start": 22.724,
+   "end": 23.4
+  },
+  {
+   "word": "and",
+   "start": 23.4,
+   "end": 23.625
+  },
+  {
+   "word": "real",
+   "start": 23.625,
+   "end": 23.85
+  },
+  {
+   "word": "numbers",
+   "start": 23.85,
+   "end": 24.301
+  },
+  {
+   "word": "No",
+   "start": 24.551,
+   "end": 24.726
+  },
+  {
+   "word": "more",
+   "start": 24.726,
+   "end": 25.076
+  },
+  {
+   "word": "repeating",
+   "start": 25.076,
+   "end": 25.601
+  },
+  {
+   "word": "yourself",
+   "start": 25.601,
+   "end": 25.951
+  },
+  {
+   "word": "No",
+   "start": 26.201,
+   "end": 26.382
+  },
+  {
+   "word": "more",
+   "start": 26.382,
+   "end": 26.743
+  },
+  {
+   "word": "starting",
+   "start": 26.743,
+   "end": 27.104
+  },
+  {
+   "word": "from",
+   "start": 27.104,
+   "end": 27.284
+  },
+  {
+   "word": "zero",
+   "start": 27.284,
+   "end": 27.645
+  },
+  {
+   "word": "Memory",
+   "start": 27.895,
+   "end": 28.42
+  },
+  {
+   "word": "once",
+   "start": 28.437,
+   "end": 28.786
+  },
+  {
+   "word": "Everywhere",
+   "start": 29.036,
+   "end": 29.646
+  }
+ ]
+}

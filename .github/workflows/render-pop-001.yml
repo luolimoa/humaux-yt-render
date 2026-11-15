@@ -1,0 +1,91 @@
+name: render-pop-001
+
+# Renders humaux-pop-001 (POP-001 《Your AI Has Amnesia》, pastel pop
+# kinetic-typography verification film) with huashu-motion on a
+# GitHub-hosted macOS runner, because the local VM's Hatch Chromium cannot
+# start (WebGL domain policy is not mounted into the cell).
+# Binary project assets are stored base64-encoded (*.b64) so the snapshot
+# push stays UTF-8; the workflow decodes them and verifies sha256 before
+# rendering. Trigger: push to main (or manual dispatch).
+# Modeled on render-yt-001.yml (macOS runner, BSD base64 via stdin
+# redirect, macOS Chrome path). The pop system (pop.css / pop.js) ships
+# inside the project dir, so the upstream huashu-motion clone needs no
+# changes.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  render:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Check runner tools
+        run: |
+          node --version
+          command -v ffmpeg >/dev/null 2>&1 || brew install ffmpeg
+          ffmpeg -version | head -1
+          ls "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" && "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --version
+
+      - name: Clone huashu-motion tool (pinned commit)
+        run: |
+          git clone https://github.com/alchaincyf/huashu-motion.git tool
+          cd tool && git checkout 3e92780 && git log --oneline -1
+
+      - name: Stage project and restore binaries
+        run: |
+          cp -r humaux-pop-001 tool/
+          cd tool/humaux-pop-001
+          base64 -d < assets/voice.wav.b64 > assets/voice.wav
+          base64 -d < assets/fonts/Anton-400.woff.b64 > assets/fonts/Anton-400.woff
+          base64 -d < assets/fonts/NotoSansSC-500.woff.b64 > assets/fonts/NotoSansSC-500.woff
+          base64 -d < assets/fonts/NotoSansSC-700.woff.b64 > assets/fonts/NotoSansSC-700.woff
+          base64 -d < assets/fonts/NotoSansSC-800.woff.b64 > assets/fonts/NotoSansSC-800.woff
+          base64 -d < assets/fonts/NotoSansSC-900.woff.b64 > assets/fonts/NotoSansSC-900.woff
+          shasum -a 256 -c <<'EOF'
+          c490ff2b0374ad0a7e8c891a26dc1726c82a833617a58fe14da278e12e4c5650  assets/voice.wav
+          791375bdbed00de4a3aad4811291220ead0e1405d6f8b5bdbf109798c8359ac5  assets/fonts/Anton-400.woff
+          928d841b1ec663ebce82593568cbc19749fe652f88b8ec960723b7d87b551512  assets/fonts/NotoSansSC-500.woff
+          dd0d39a9780eb995c499af0c20cca93b1dfdda865da70871a20890b3e406b968  assets/fonts/NotoSansSC-700.woff
+          b57f9c645b1a4967a3c8914ed41f24d109394a8175e36af08f93e40803e84664  assets/fonts/NotoSansSC-800.woff
+          d2d8a42438b18b65b6577434df4e41bb08c6b5051281757849af00ab743bb58f  assets/fonts/NotoSansSC-900.woff
+          EOF
+          rm assets/voice.wav.b64 assets/fonts/*.woff.b64
+          ls -la assets assets/fonts
+
+      - name: Render
+        run: |
+          cd tool
+          node cli/om.js sound humaux-pop-001
+          node cli/om.js check humaux-pop-001
+          node cli/om.js render humaux-pop-001 --workers 1
+          node cli/om.js qa humaux-pop-001
+          ls -la humaux-pop-001/out/
+
+      - name: Upload mp4 artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pop-001
+          path: tool/humaux-pop-001/out/
+          if-no-files-found: error
+
+      - name: Report result as issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "Render pop-001: ${{ job.status }}" --body "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          Artifact: pop-001
+          Status: ${{ job.status }}"

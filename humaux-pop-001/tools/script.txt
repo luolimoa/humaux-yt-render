@@ -1,0 +1,8 @@
+Your AI has amnesia. Every single time.
+You brief it on Monday. By Friday, it's a stranger again.
+You told it last week. It has no idea what you mean.
+That's not a model problem. It's a memory problem.
+Humaux is memory for AI agents. Cross-session. Your agent remembers what you told it last week, last month, last project.
+On this channel, no hype. Just real builds, real failures, and real numbers.
+No more repeating yourself. No more starting from zero.
+Memory, once. Everywhere.
