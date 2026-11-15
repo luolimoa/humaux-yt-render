@@ -346,7 +346,7 @@
   /* ---- S3 diagnosis (beats 20–27) ---- */
   tl.addLabel('scene:diagnosis', B(20));
   show('#s3', B(20));
-  tl.set('#hud', { className: '+=hud--on-dark' }, B(20));
+  tl.set('#hud', { color: '#ffffff' }, B(20));
   tl.fromTo('[data-om-id="line-model"]', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55 }, B(20));
   tl.fromTo('[data-om-id="strike-m"]', { opacity: 0, scaleX: 0, transformOrigin: '0 50%' }, { opacity: 1, scaleX: 1, duration: 0.35, ease: 'expo.out' }, OM.sfx('draw', B(23)));
   karaPop(memChars, B(24), 'impact');
@@ -358,7 +358,7 @@
   /* ---- S4 solution (beats 27–41) ---- */
   tl.addLabel('scene:solution', B(27));
   show('#s4', B(27));
-  tl.set('#hud', { className: '-=hud--on-dark' }, B(27));
+  tl.set('#hud', { color: '#1A1A1A' }, B(27));
   karaPop(brandChars, B(27), 'impact');
   tl.fromTo('[data-om-id="sticker-cross"]', { scale: 0, rotation: 12, opacity: 0 }, { scale: 1, rotation: -4, opacity: 1, duration: 0.4, ease: 'back.out(2.5)' }, OM.sfx('pop', B(29)));
   tl.fromTo('[data-om-id="brand-sub"]', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, B(30));
