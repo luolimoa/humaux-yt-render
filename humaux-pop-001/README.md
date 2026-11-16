@@ -94,25 +94,40 @@ through S3 in pop-001 attempt 2). A plain CSS `color` set is seek-safe.
 
 `POP.bpm = 120` → `POP.beat()` = 0.5 s, `POP.barAt(n)` = bar n in seconds.
 Put every scene cut on `B(n)` (beat n) so the picture locks to the music
-bed. `om sound` picks a music BPM that best fits the cut times, and the
-`pizzicato` style's range [108, 124] contains 120, so a 0.5 s cut grid lands
-on 120 BPM exactly. Use `OM.music({ style: 'pizzicato', bpm: 120 })` for the bed
-(`bpm: 120` is explicit so the grid lands exactly on the cuts).
+bed. `om sound` picks a music BPM that best fits the cut times; the bed style
+is forced with an explicit `bpm: 120` so the grid lands exactly on the cuts.
+Current bed: `OM.music({ style: 'acoustic', bpm: 120 })` — acoustic's range
+is [96, 116], so 120 is +3.4% above its max, but the step patterns are
+beat-based and scale, and the fit uses the explicit bpm.
 
-## Audio (2026-11-16 correction — the v1 audio did not match)
-- **BGM must be bright.** v1 used `pulse` (driving synth-pop, sidechained pad,
-  four-on-the-floor) and it clashed with the pastel pop visuals — dark bed +
-  bright picture reads as two different videos. `pizzicato` (major key,
-  glockenspiel + finger snaps + pizzicato oom-pah, bpm [108, 124]) is bright,
-  bouncy and playful, and it hits 120 BPM exactly. Never use `pulse` (or any
-  dark/heavy bed) for a pop-style film. `funk` cannot reach 120 BPM
-  (range [100, 112]) and `chiptune` cannot either ([128, 150]) — both would
-  drift off the beat grid.
+## Audio (2026-11-16 corrections — v1 audio did not match, v3 broke the BGM)
+- **BGM must be bright AND full.** v1 used `pulse` (driving synth-pop,
+  sidechained pad, four-on-the-floor) and it clashed with the pastel pop
+  visuals — dark bed + bright picture reads as two different videos. v2
+  switched to `pizzicato` (major key, glockenspiel + finger snaps +
+  pizzicato oom-pah, bpm [108, 124]) and it worked with the v2 voice — but
+  v3 changed only the voice (af_bella → af_sarah, +20% RMS, ±48 Hz pitch
+  swings) and the user said the BGM stopped working. Diagnosis: pizzicato
+  is sparse — no pad, no kick, just glock plucks + snaps + woodblock +
+  sparse pizz bass — and the mixer ducks the bed −10 dB under words and
+  carves it around 2 kHz, which is exactly where the glock lead lives, so
+  under a louder, more continuous voice the bed is effectively absent
+  during speech (v3 mix: voice sections 0.075–0.144 RMS, music-only tail
+  0.0029). v4 uses `acoustic` (major key, strummed guitar + stomps + claps
+  + shaker, continuous texture, energy spread across the spectrum instead
+  of concentrated in the carve band). Never use `pulse` (or any dark/heavy
+  bed) for a pop-style film. `funk` cannot reach 120 BPM (range [100, 112])
+  and `chiptune` cannot either ([128, 150]) — both would drift off the
+  beat grid. **Standing lesson: BGM and voice are a pair — changing the
+  voice can break a BGM that previously worked; re-check the bed whenever
+  the voice changes.**
 - **Voice must be energetic.** v1 used Kokoro `af_heart` at 1.12x — calm, flat,
   too slow for 120 BPM cuts. v2 uses Kokoro `af_bella` at 1.25x (brighter,
-  more expressive; 26.93 s vs 29.65 s). After re-voicing, regenerate the
-  `SENTENCES` times and `VOICE_END` in index.html from the new cues
-  (`om voice` only rewrites the audio element and the `om-cues` JSON).
+  more expressive; 26.93 s vs 29.65 s). v3 uses Kokoro `af_sarah` at 1.2x
+  (liveliest by measurement: F0 std 46.5 Hz vs af_bella 25.3 Hz; 28.20 s).
+  After re-voicing, regenerate the `SENTENCES` times and `VOICE_END` in
+  index.html from the new cues (`om voice` only rewrites the audio element
+  and the `om-cues` JSON).
 
 ## Gotchas (from the iteration log — don't relearn these)
 
