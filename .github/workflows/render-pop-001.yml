@@ -54,7 +54,7 @@ jobs:
           base64 -d < assets/fonts/NotoSansSC-800.woff.b64 > assets/fonts/NotoSansSC-800.woff
           base64 -d < assets/fonts/NotoSansSC-900.woff.b64 > assets/fonts/NotoSansSC-900.woff
           shasum -a 256 -c <<'EOF'
-          7a5eadb309d34d3293aa36efe51536bd859547450e68ff78f8895ede6c94b1c9  assets/voice.wav
+          9c21029032767d622e94edd55d82bc66ced40b9d5b86b245c219cc291459573a  assets/voice.wav
           791375bdbed00de4a3aad4811291220ead0e1405d6f8b5bdbf109798c8359ac5  assets/fonts/Anton-400.woff
           928d841b1ec663ebce82593568cbc19749fe652f88b8ec960723b7d87b551512  assets/fonts/NotoSansSC-500.woff
           dd0d39a9780eb995c499af0c20cca93b1dfdda865da70871a20890b3e406b968  assets/fonts/NotoSansSC-700.woff
