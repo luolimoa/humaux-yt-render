@@ -84,13 +84,35 @@ POP.hud.counterTo(tl, 0, 100, 0, VOICE_END, v => 'MEMORY ' + Math.round(v) + '%'
 POP.hud.progressTo(tl, 0, VOICE_END);
 ```
 
+Dark sections: switch the HUD text colour directly with `tl.set`
+(`tl.set('#hud', { color: '#ffffff' }, at)`). Do NOT toggle a class with
+`tl.set(..., { className: '+=hud--on-dark' })` — the class change did not
+survive the render seek (verified 2026-11-16: HUD stayed dark-on-dark
+through S3 in pop-001 attempt 2). A plain CSS `color` set is seek-safe.
+
 ## BPM timeline
 
 `POP.bpm = 120` → `POP.beat()` = 0.5 s, `POP.barAt(n)` = bar n in seconds.
 Put every scene cut on `B(n)` (beat n) so the picture locks to the music
 bed. `om sound` picks a music BPM that best fits the cut times, and the
-`pulse` style's range [116, 124] contains 120, so a 0.5 s cut grid lands
-on 120 BPM exactly. Use `OM.music({ style: 'pulse' })` for the bed.
+`pizzicato` style's range [108, 124] contains 120, so a 0.5 s cut grid lands
+on 120 BPM exactly. Use `OM.music({ style: 'pizzicato', bpm: 120 })` for the bed
+(`bpm: 120` is explicit so the grid lands exactly on the cuts).
+
+## Audio (2026-11-16 correction — the v1 audio did not match)
+- **BGM must be bright.** v1 used `pulse` (driving synth-pop, sidechained pad,
+  four-on-the-floor) and it clashed with the pastel pop visuals — dark bed +
+  bright picture reads as two different videos. `pizzicato` (major key,
+  glockenspiel + finger snaps + pizzicato oom-pah, bpm [108, 124]) is bright,
+  bouncy and playful, and it hits 120 BPM exactly. Never use `pulse` (or any
+  dark/heavy bed) for a pop-style film. `funk` cannot reach 120 BPM
+  (range [100, 112]) and `chiptune` cannot either ([128, 150]) — both would
+  drift off the beat grid.
+- **Voice must be energetic.** v1 used Kokoro `af_heart` at 1.12x — calm, flat,
+  too slow for 120 BPM cuts. v2 uses Kokoro `af_bella` at 1.25x (brighter,
+  more expressive; 26.93 s vs 29.65 s). After re-voicing, regenerate the
+  `SENTENCES` times and `VOICE_END` in index.html from the new cues
+  (`om voice` only rewrites the audio element and the `om-cues` JSON).
 
 ## Gotchas (from the iteration log — don't relearn these)
 
