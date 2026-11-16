@@ -43,6 +43,13 @@ jobs:
           git clone https://github.com/alchaincyf/huashu-motion.git tool
           cd tool && git checkout 3e92780 && git log --oneline -1
 
+      # Research v5 (2026-11-16): mixer constants from the "how others do it" study —
+      # bed voice-20 LUFS, duck 7 dB, carve -3 dB @ 2.5 kHz, bridge gaps <1 s, 70 Hz HPF.
+      # Patch lives in this repo; upstream stays pinned at 3e92780.
+      - name: Apply research v5 mixer patch
+        run: |
+          cd tool && git apply ../sound-research-v5.patch && git diff --stat
+
       - name: Stage project and restore binaries
         run: |
           cp -r humaux-pop-001 tool/

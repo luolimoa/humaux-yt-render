@@ -1,0 +1,57 @@
+diff --git a/cli/lib/sound.js b/cli/lib/sound.js
+index 47d7dbe..ad302c5 100644
+--- a/cli/lib/sound.js
++++ b/cli/lib/sound.js
+@@ -202,23 +202,26 @@ function balanceLows(t, over = 0) {
+ }
+ const peakOf = (t) => { let m = 0; for (let i = 0; i < t.n; i++) m = Math.max(m, Math.abs(t.L[i]), Math.abs(t.R[i])); return m; };
+ 
+-// Music ducks under narration: -10 dB while a word is spoken (gaps under 0.3 s bridged), and the
+-// presence band (~1–4 kHz) where speech lives is carved a further ~5 dB, so the voice sits in a hole
+-// in the music instead of fighting it.
+-function duck(t, words, depth = 10) {
++// Music ducks under narration: -7 dB while a word is spoken (gaps under 1.0 s bridged), and the
++// presence band (~1–4 kHz) where speech lives is carved a further ~3 dB, so the voice sits in a hole
++// in the music instead of fighting it. (Research v5, 2026-11-16: bed -20 dB under voice, duck 6–8 dB,
++// carve 2–4 dB at ~2.5 kHz, bridge gaps <1 s.)
++function duck(t, words, depth = 7) {
+   if (!words?.length) return;
+   const spans = [];
+-  for (const w of words) { const last = spans.at(-1); if (last && w.start - last[1] < 0.3) last[1] = Math.max(last[1], w.end); else spans.push([w.start, w.end]); }
++  for (const w of words) { const last = spans.at(-1); if (last && w.start - last[1] < 1.0) last[1] = Math.max(last[1], w.end); else spans.push([w.start, w.end]); }
+   const target = new Float32Array(t.n).fill(1), low = undb(-depth);
+   for (const [a, b] of spans) for (let i = Math.max(0, N(a - 0.06)); i < Math.min(t.n, N(b + 0.12)); i++) target[i] = low;
+   const att = Math.exp(-1 / (0.06 * RATE)), rel = Math.exp(-1 / (0.35 * RATE));
+-  const bl = biquad(t.L, 'bp', 2200, 0.6), br = biquad(t.R, 'bp', 2200, 0.6), carve = 1 - undb(-5);
++  const bl = biquad(t.L, 'bp', 2500, 0.6), br = biquad(t.R, 'bp', 2500, 0.6), carve = 1 - undb(-3);
+   let g = 1;
+   for (let i = 0; i < t.n; i++) {
+     const k = target[i] < g ? att : rel; g = target[i] + (g - target[i]) * k;
+     const c = carve * (1 - g) / (1 - low);
+     t.L[i] = (t.L[i] - bl[i] * c) * g; t.R[i] = (t.R[i] - br[i] * c) * g;
+   }
++  // 70 Hz high-pass on the music stem (research: 60–80 Hz) — trims sub rumble from the bed.
++  t.L = biquad(t.L, 'hp', 70); t.R = biquad(t.R, 'hp', 70);
+ }
+ 
+ // Gain automation for the music bus: the breath before the drop (down to near-silence for `suck`
+@@ -439,8 +442,8 @@ export function mixdown(p0, { voiced = false, words = [], voiceLufs = null, musi
+   reverb(fx.L, fx.R, Math.max(0.08, mw * 0.6), ms); // the effects live in the music's room
+ 
+   // Levels. Alone: music at -18 LUFS, effects on top, master normalized to -14 LUFS (where social feeds normalize). Under narration
+-  // the bed sits ~12 LU below the voice so speech stays clear.
+-  const musicTarget = voiced ? (voiceLufs != null && isFinite(voiceLufs) ? voiceLufs - 12 : -28) : -18;
++  // the bed sits ~20 LU below the voice so speech stays clear (research v5, 2026-11-16; was -12).
++  const musicTarget = voiced ? (voiceLufs != null && isFinite(voiceLufs) ? voiceLufs - 20 : -28) : -18;
+   const ml = musicOn ? loudness(music.L, music.R) : -Infinity;
+   if (isFinite(ml)) music.scale(undb(musicTarget - ml));
+   const fxGain = undb(voiced ? musicTarget + 18 + 4 : -2); // effects were levelled against a -18 LUFS bed; a little hotter under a voice
+@@ -552,7 +555,7 @@ export async function sound(project, opts = {}, log = () => {}) {
+     lines.push(`energy   ${lv.map((x) => `${x.name} ${x.db.toFixed(1)}`).join(' · ')} dB RMS${flat ? ' — flat: every stretch within 3 dB, the film has no contour; give it a stop and a peak (rhythm.md)' : ' — should rise in steps, dip at the stop and peak at the drop (rhythm.md)'}`);
+   }
+   lines.push(hits.length ? `effects  ${hits.length} hits: ${Object.entries(counts).map(([k, v]) => `${k}×${v}`).join(', ')}` : 'effects  none — mark the moments that land with OM.sfx(name, at) (om sound --list); a film without hits sounds like a slideshow');
+-  if (voiceTag) lines.push(`voice    music ducked −10 dB and carved around 2 kHz under ${words.length} words; bed ${musicTarget.toFixed(1)} LUFS${voiceLufs != null ? ` (voice ${voiceLufs.toFixed(1)})` : ''}`);
++  if (voiceTag) lines.push(`voice    music ducked −7 dB and carved around 2.5 kHz under ${words.length} words; bed ${musicTarget.toFixed(1)} LUFS${voiceLufs != null ? ` (voice ${voiceLufs.toFixed(1)})` : ''}`);
+   lines.push(`took     ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+   mkdirSync(project.om, { recursive: true });
+   writeFileSync(memo, JSON.stringify({ key, wav: stamp(wav), duration: p.duration, report: lines.join('\n') }));
