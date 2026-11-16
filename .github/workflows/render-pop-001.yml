@@ -71,6 +71,19 @@ jobs:
           rm assets/voice.wav.b64 assets/fonts/*.woff.b64
           ls -la assets assets/fonts
 
+      # v6 (2026-11-16): voice.wav is 24 kHz, but the mixer only measures
+      # voiceLufs when the wav rate == RATE (48 kHz) — otherwise it falls
+      # back to bed -28 LUFS and the voiceLufs-20 formula never runs.
+      # Resample to 48 kHz so the v5 formula actually takes effect.
+      # Duration unchanged (28.20s), cues unaffected. Must run after the
+      # sha256 check above (resampling changes the hash).
+      - name: Resample voice to 48 kHz
+        run: |
+          cd tool/humaux-pop-001
+          ffmpeg -y -v error -i assets/voice.wav -ar 48000 -ac 1 assets/voice48.wav
+          mv assets/voice48.wav assets/voice.wav
+          ffprobe -v error -show_entries stream=sample_rate,channels,duration -of default=noprint_wrappers=1 assets/voice.wav
+
       - name: Render
         run: |
           cd tool
